@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class FormManager : MonoBehaviour
@@ -8,7 +7,7 @@ public class FormManager : MonoBehaviour
         inputBody;
     [SerializeField] private GameObject canvasWorld;
     [SerializeField] private NotesHolder notesHolder;
-
+    
     public void SaveNote()
     {
         if(!string.IsNullOrWhiteSpace(inputTitle.text) && 
