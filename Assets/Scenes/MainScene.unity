@@ -690,6 +690,7 @@ GameObject:
   m_Component:
   - component: {fileID: 554635543}
   - component: {fileID: 554635545}
+  - component: {fileID: 554635546}
   - component: {fileID: 554635544}
   m_Layer: 0
   m_Name: NotesHolder
@@ -697,7 +698,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &554635543
 RectTransform:
   m_ObjectHideFlags: 0
@@ -728,6 +729,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 554635542}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b3f749c716cd84bbc1c904a694d7a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleText: {fileID: 1640761772}
+  bodyText: {fileID: 1968845011}
+--- !u!222 &554635545
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554635542}
+  m_CullTransparentMesh: 0
+--- !u!114 &554635546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554635542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -748,14 +771,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!222 &554635545
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554635542}
-  m_CullTransparentMesh: 0
 --- !u!1 &636057161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,6 +1535,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1831383786}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1365488737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1906,7 +1932,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AAAAAAAAAAAAAAAAAAAA
+  m_Text: Title
 --- !u!222 &1640761773
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2303,7 +2329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1831383787
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2379,6 +2405,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputTitle: {fileID: 1412396201}
   inputBody: {fileID: 1369166616}
+  canvasWorld: {fileID: 2010371050}
+  notesHolder: {fileID: 554635544}
 --- !u!1 &1968845009
 GameObject:
   m_ObjectHideFlags: 0
@@ -2448,7 +2476,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  m_Text: Body Sentences.
 --- !u!222 &1968845012
 CanvasRenderer:
   m_ObjectHideFlags: 0
