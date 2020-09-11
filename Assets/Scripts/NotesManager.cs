@@ -11,12 +11,17 @@ public class NotesManager : MonoBehaviour
         // Make notes if available
         if(GameDataController.GetNotesCount() > 0)
         {
-            for (int i = 0; i < GameDataController.GetNotesCount(); i++)
+            // foreach (NoteData noteData in GameDataController.SaveData.noteDatas)
+            // {
+            //     
+            // }
+            // for (int i = 0; i < GameDataController.GetNotesCount(); i++)
+            foreach (NoteData noteData in GameDataController.SaveData.noteDatas)
             {
                 // Duplicate notes holder
                 GameObject notesDuplicate = Instantiate(notesHolder.gameObject, canvasWorld.transform, true);
                 // Name the object
-                notesDuplicate.name = $"Note {i}";
+                notesDuplicate.name = noteData.id;
                 
                 // Get NotesHolder component
                 NotesHolder notesHolderDuplicate = notesDuplicate.GetComponent<NotesHolder>();
@@ -25,7 +30,7 @@ public class NotesManager : MonoBehaviour
                 notesDuplicate.SetActive(true);
                 
                 // Get notes
-                GameDataController.GetNotes(i,
+                GameDataController.GetNotes(noteData,
                     notesDuplicate.name,
                     notesHolderDuplicate.TitleText,
                     notesHolderDuplicate.BodyText,

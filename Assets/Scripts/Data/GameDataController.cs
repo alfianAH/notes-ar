@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -70,24 +71,24 @@ public class GameDataController : MonoBehaviour
     /// <param name="titleText"></param>
     /// <param name="bodyText"></param>
     /// <param name="notePosition"></param>
-    public static void GetNotes(int index, string noteName,
+    public static void GetNotes(NoteData noteData, string noteName,
         Text titleText, Text bodyText, RectTransform notePosition)
     {
         if (SaveData.noteDatas == null) return;
         
         // Set note's data
-        if (SaveData.noteDatas[index].id == noteName)
+        if (noteData.id == noteName)
         {
-            Debug.Log("Set index " + index);
+            Debug.Log("Set index " + noteData.id);
 
             // Set titleText
-            titleText.text = SaveData.noteDatas[index].titleText;
+            titleText.text = noteData.titleText;
             // Set bodyText
-            bodyText.text = SaveData.noteDatas[index].bodyText;
+            bodyText.text = noteData.bodyText;
             // Set position
-            notePosition.position = new Vector3(SaveData.noteDatas[index].xAxis,
-                                                SaveData.noteDatas[index].yAxis,
-                                                SaveData.noteDatas[index].zAxis); 
+            notePosition.position = new Vector3(noteData.xAxis,
+                noteData.yAxis,
+                noteData.zAxis);
         }
     }
     
