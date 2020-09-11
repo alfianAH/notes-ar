@@ -7,33 +7,40 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     [SerializeField] private Text titleText,
         bodyText;
 
-    [SerializeField] private Canvas canvas;
-    [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private Canvas canvasWorld;
+    public RectTransform rectTransform;
     [SerializeField] private Image backgroundImage;
     
     private Color backgroundColor;
-    private bool isPressed;
-
+    
     public Text TitleText => titleText;
 
     public Text BodyText => bodyText;
 
     private void Awake()
     {
+        GetNoteComponents();
+    }
+    
+    /// <summary>
+    /// Get Notes' Components
+    /// </summary>
+    private void GetNoteComponents()
+    {
         rectTransform = GetComponent<RectTransform>();
         backgroundImage = GetComponent<Image>();
         backgroundColor = backgroundImage.color;
 
         // Check canvas
-        if (canvas == null)
+        if (canvasWorld == null)
         {
             Transform canvasTransform = transform.parent;
             while (canvasTransform != null)
             {
                 // Set canvas
-                canvas = canvasTransform.GetComponent<Canvas>();
+                canvasWorld = canvasTransform.GetComponent<Canvas>();
                 // If canvas is found, break.
-                if (canvas != null)
+                if (canvasWorld != null)
                     break;
                  
                 // Check in parent
@@ -58,7 +65,7 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition -= eventData.delta / canvas.scaleFactor;
+        rectTransform.anchoredPosition -= eventData.delta / canvasWorld.scaleFactor;
     }
     
     /// <summary>
