@@ -66,7 +66,7 @@ public class GameDataController : MonoBehaviour
     /// <summary>
     /// Get Notes' Data
     /// </summary>
-    /// <param name="index"></param>
+    /// <param name="noteData"></param>
     /// <param name="noteName"></param>
     /// <param name="titleText"></param>
     /// <param name="bodyText"></param>
@@ -86,9 +86,7 @@ public class GameDataController : MonoBehaviour
             // Set bodyText
             bodyText.text = noteData.bodyText;
             // Set position
-            notePosition.position = new Vector3(noteData.xAxis,
-                noteData.yAxis,
-                noteData.zAxis);
+            notePosition.anchoredPosition = new Vector2(noteData.xAxis, noteData.yAxis);
         }
     }
     
@@ -136,7 +134,7 @@ public class GameDataController : MonoBehaviour
         
         NoteData notesData = new NoteData
         {
-            xAxis = -notesPosition.x,
+            xAxis = notesPosition.x,
             yAxis = notesPosition.y,
             id = notesHolder.name,
             titleText = notesHolder.TitleText.text,
