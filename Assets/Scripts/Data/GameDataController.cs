@@ -151,4 +151,18 @@ public class GameDataController : MonoBehaviour
             break;
         }
     }
+    
+    /// <summary>
+    /// Delete note
+    /// </summary>
+    /// <param name="notesHolder"></param>
+    public static void DeleteNote(NotesHolder notesHolder)
+    {
+        if (SaveData.noteDatas == null)
+        {
+            SaveData.noteDatas = new List<NoteData>();
+        }
+        // BUG: index in JSON is not as same as index in notes holder
+        SaveData.noteDatas.RemoveAt(notesHolder.NoteId);
+    }
 }

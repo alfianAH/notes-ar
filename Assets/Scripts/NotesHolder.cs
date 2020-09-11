@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Text.RegularExpressions;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -7,7 +9,8 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 {
     [SerializeField] private Text titleText,
         bodyText;
-    [SerializeField] private Button updateButton;
+    [SerializeField] private Button updateButton,
+        deleteButton;
     [SerializeField] private FormManager updateFormManager;
     [SerializeField] private Canvas canvasWorld;
     public RectTransform rectTransform;
@@ -15,7 +18,10 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     
     private Color backgroundColor;
     private bool isDragging;
-    
+    [SerializeField] private int noteId;
+
+    public int NoteId => noteId;
+
     public Text TitleText => titleText;
 
     public Text BodyText => bodyText;
@@ -24,7 +30,13 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         GetNoteComponents();
     }
-    
+
+    private void Start()
+    {
+        // Set noteId by getting last number in game object's name
+        noteId = Int32.Parse(Regex.Match(name, @"\d+").Value);
+    }
+
     /// <summary>
     /// Get Notes' Components
     /// </summary>
@@ -109,6 +121,7 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             updateFormManager.inputBody.text = bodyText.text;
             
             // Add listener
+            // Update Button
             // Save note
             updateButton.onClick.AddListener(() => updateFormManager.SaveUpdatedNote(this));
             // Empty the input field
@@ -116,6 +129,10 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             updateButton.onClick.AddListener(() => updateFormManager.inputBody.text = "");
             // Deactivate update form manager
             updateButton.onClick.AddListener(() => updateFormManager.gameObject.SetActive(false));
+            
+            // Delete button
+            deleteButton.onClick.AddListener(() => updateFormManager.DeleteNote(this));
+            deleteButton.onClick.AddListener(() => updateFormManager.gameObject.SetActive(false));
         }
     }
 }

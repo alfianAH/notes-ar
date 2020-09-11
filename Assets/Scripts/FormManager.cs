@@ -85,6 +85,16 @@ public class FormManager : MonoBehaviour
     }
     
     /// <summary>
+    /// Delete selected note
+    /// </summary>
+    /// <param name="selectedNotesHolder"></param>
+    public void DeleteNote(NotesHolder selectedNotesHolder)
+    {
+        GameDataController.DeleteNote(selectedNotesHolder);
+        Destroy(selectedNotesHolder.gameObject);
+    }
+    
+    /// <summary>
     /// Add Note Number to prefs to make note's name unique
     /// </summary>
     private void AddNoteNumber()
