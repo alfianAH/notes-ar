@@ -2,16 +2,19 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
+public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, 
+    IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private Text titleText,
         bodyText;
-
+    [SerializeField] private Button updateButton;
+    [SerializeField] private FormManager updateFormManager;
     [SerializeField] private Canvas canvasWorld;
     public RectTransform rectTransform;
     [SerializeField] private Image backgroundImage;
     
     private Color backgroundColor;
+    private bool isDragging;
     
     public Text TitleText => titleText;
 
@@ -57,6 +60,7 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         backgroundColor.a = .4f;
         backgroundImage.color = backgroundColor;
+        isDragging = true;
     }
     
     /// <summary>
@@ -76,7 +80,8 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         backgroundColor.a = 1f;
         backgroundImage.color = backgroundColor;
-        GameDataController.SetNotes(this, rectTransform.anchoredPosition);
+        GameDataController.UpdateNotes(this, rectTransform.anchoredPosition);
+        isDragging = false;
     }
     
     /// <summary>
@@ -86,5 +91,31 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnPointerDown(PointerEventData eventData)
     {
         rectTransform.SetAsLastSibling();
+    }
+    
+    /// <summary>
+    /// On Pointer Up, update note when player tap the note
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        // If player tap the note, ...
+        if (!isDragging)
+        {
+            // Activate update form manager
+            updateFormManager.gameObject.SetActive(true);
+            // Set input field text
+            updateFormManager.inputTitle.text = titleText.text;
+            updateFormManager.inputBody.text = bodyText.text;
+            
+            // Add listener
+            // Save note
+            updateButton.onClick.AddListener(() => updateFormManager.SaveUpdatedNote(this));
+            // Empty the input field
+            updateButton.onClick.AddListener(() => updateFormManager.inputTitle.text = "");
+            updateButton.onClick.AddListener(() => updateFormManager.inputBody.text = "");
+            // Deactivate update form manager
+            updateButton.onClick.AddListener(() => updateFormManager.gameObject.SetActive(false));
+        }
     }
 }

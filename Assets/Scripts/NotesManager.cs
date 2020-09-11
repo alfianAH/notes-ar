@@ -11,11 +11,6 @@ public class NotesManager : MonoBehaviour
         // Make notes if available
         if(GameDataController.GetNotesCount() > 0)
         {
-            // foreach (NoteData noteData in GameDataController.SaveData.noteDatas)
-            // {
-            //     
-            // }
-            // for (int i = 0; i < GameDataController.GetNotesCount(); i++)
             foreach (NoteData noteData in GameDataController.SaveData.noteDatas)
             {
                 // Duplicate notes holder

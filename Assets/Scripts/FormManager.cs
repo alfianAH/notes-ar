@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class FormManager : MonoBehaviour
 {
-    [SerializeField] private InputField inputTitle,
+    public InputField inputTitle,
         inputBody;
     [SerializeField] private GameObject canvasWorld;
     [SerializeField] private NotesHolder notesHolder;
@@ -24,8 +24,11 @@ public class FormManager : MonoBehaviour
             PlayerPrefs.SetInt(PlayerPrefsConstant.NoteNumber, noteNumber);
         }
     }
-
-    public void SaveNote()
+    
+    /// <summary>
+    /// Save added note
+    /// </summary>
+    public void SaveAddedNote()
     {
         if(!string.IsNullOrWhiteSpace(inputTitle.text) && 
            !string.IsNullOrWhiteSpace(inputBody.text))
@@ -54,6 +57,30 @@ public class FormManager : MonoBehaviour
                 notesHolderDuplicate.TitleText,
                 notesHolderDuplicate.BodyText,
                 notesRectTransform);
+        }
+    }
+    
+    /// <summary>
+    /// Save updated note
+    /// </summary>
+    public void SaveUpdatedNote(NotesHolder selectedNotesHolder)
+    {
+        if(!string.IsNullOrWhiteSpace(inputTitle.text) && 
+           !string.IsNullOrWhiteSpace(inputBody.text))
+        {
+            Debug.Log("Title: " + inputTitle.text);
+            Debug.Log("Body: " + inputBody.text);
+            
+            RectTransform notesRectTransform = selectedNotesHolder.gameObject.GetComponent<RectTransform>();
+            
+            selectedNotesHolder.gameObject.SetActive(true);
+            
+            // Set note's text
+            selectedNotesHolder.TitleText.text = inputTitle.text;
+            selectedNotesHolder.BodyText.text = inputBody.text;
+            
+            // Save to JSON
+            GameDataController.UpdateNotes(selectedNotesHolder, notesRectTransform.anchoredPosition);
         }
     }
     

@@ -125,7 +125,7 @@ public class GameDataController : MonoBehaviour
     /// </summary>
     /// <param name="notesHolder"></param>
     /// <param name="notesPosition"></param>
-    public static void SetNotes(NotesHolder notesHolder, Vector2 notesPosition)
+    public static void UpdateNotes(NotesHolder notesHolder, Vector2 notesPosition)
     {
         if (SaveData.noteDatas == null)
         {
@@ -140,7 +140,6 @@ public class GameDataController : MonoBehaviour
             titleText = notesHolder.TitleText.text,
             bodyText = notesHolder.BodyText.text
         };
-        Debug.Log("Change position");
         
         // Search notes
         for (int i = 0; i <= SaveData.noteDatas.Count; i++)
