@@ -76,6 +76,7 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         backgroundColor.a = 1f;
         backgroundImage.color = backgroundColor;
+        GameDataController.SetNotes(this, rectTransform.anchoredPosition);
     }
     
     /// <summary>

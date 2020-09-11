@@ -10,8 +10,8 @@ public struct SaveData
 [Serializable]
 public struct NoteData
 {
-    public float XAxis, YAxis, ZAxis;
-    public string Id;
-    public string TitleText;
-    public string BodyText;
+    public float xAxis, yAxis, zAxis;
+    public string id;
+    public string titleText;
+    public string bodyText;
 }

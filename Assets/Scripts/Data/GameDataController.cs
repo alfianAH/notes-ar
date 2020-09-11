@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +8,8 @@ public class GameDataController : MonoBehaviour
     
     private void Awake()
     {
-        // PlayerPrefs.DeleteAll();
+        // PlayerPrefs.DeleteKey(PlayerPrefsConstant.NoteNumber);
+        // PlayerPrefs.DeleteKey(PlayerPrefsConstant.GameData);
         LoadData();
     }
 
@@ -19,7 +19,6 @@ public class GameDataController : MonoBehaviour
     [ContextMenu("Save Data")]
     public void SaveGame()
     {
-        Debug.Log("Save: " + SaveData);
         string data = JsonUtility.ToJson(SaveData);
         PlayerPrefs.SetString(PlayerPrefsConstant.GameData, data);
         Debug.Log("Save: " + SaveData);
@@ -77,18 +76,18 @@ public class GameDataController : MonoBehaviour
         if (SaveData.noteDatas == null) return;
         
         // Set note's data
-        if (SaveData.noteDatas[index].Id == noteName)
+        if (SaveData.noteDatas[index].id == noteName)
         {
             Debug.Log("Set index " + index);
 
             // Set titleText
-            titleText.text = SaveData.noteDatas[index].TitleText;
+            titleText.text = SaveData.noteDatas[index].titleText;
             // Set bodyText
-            bodyText.text = SaveData.noteDatas[index].BodyText;
+            bodyText.text = SaveData.noteDatas[index].bodyText;
             // Set position
-            notePosition.position = new Vector3(SaveData.noteDatas[index].XAxis,
-                                                SaveData.noteDatas[index].YAxis,
-                                                SaveData.noteDatas[index].ZAxis); 
+            notePosition.position = new Vector3(SaveData.noteDatas[index].xAxis,
+                                                SaveData.noteDatas[index].yAxis,
+                                                SaveData.noteDatas[index].zAxis); 
         }
     }
     
@@ -109,17 +108,15 @@ public class GameDataController : MonoBehaviour
         
         NoteData notesData = new NoteData
         {
-            XAxis = notePosition.position.x,
-            YAxis = notePosition.position.y,
-            ZAxis = notePosition.position.z,
-            Id = noteName,
-            TitleText = titleText.text,
-            BodyText = bodyText.text
+            xAxis = notePosition.position.x,
+            yAxis = notePosition.position.y,
+            zAxis = notePosition.position.z,
+            id = noteName,
+            titleText = titleText.text,
+            bodyText = bodyText.text
         };
         
         SaveData.noteDatas.Add(notesData);
-        // SaveData.noteDatas.RemoveAll(t => t.Id == notesData.Id);
-        Debug.Log("Add: " + SaveData.noteDatas);
         Debug.Log($"There are {SaveData.noteDatas.Count} data(s)");
     }
 
@@ -128,23 +125,32 @@ public class GameDataController : MonoBehaviour
     /// Set notes' updated position
     /// </summary>
     /// <param name="notesHolder"></param>
-    public static void SetNotes(NotesHolder notesHolder)
+    /// <param name="notesPosition"></param>
+    public static void SetNotes(NotesHolder notesHolder, Vector2 notesPosition)
     {
         if (SaveData.noteDatas == null)
         {
             SaveData.noteDatas = new List<NoteData>();
         }
-
-        var position = notesHolder.rectTransform.position;
+        
         NoteData notesData = new NoteData
         {
-            XAxis = position.x,
-            YAxis = position.y,
-            ZAxis = position.z
+            xAxis = -notesPosition.x,
+            yAxis = notesPosition.y,
+            id = notesHolder.name,
+            titleText = notesHolder.TitleText.text,
+            bodyText = notesHolder.BodyText.text
         };
         Debug.Log("Change position");
-        // SaveData.noteDatas.FirstOrDefault(t => t.Id == notesHolder.name).XAxis = notesData.XAxis;
-        // SaveData.noteDatas.FirstOrDefault(t => t.Id == notesHolder.name).YAxis = notesData.YAxis;
-        // SaveData.noteDatas.FirstOrDefault(t => t.Id == notesHolder.name).ZAxis = notesData.ZAxis;
+        
+        // Search notes
+        for (int i = 0; i <= SaveData.noteDatas.Count; i++)
+        {
+            if(SaveData.noteDatas[i].id != notesHolder.name) continue;
+            
+            SaveData.noteDatas.RemoveAt(i);
+            SaveData.noteDatas.Add(notesData);
+            break;
+        }
     }
 }
