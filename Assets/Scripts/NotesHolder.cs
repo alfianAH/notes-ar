@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     [SerializeField] private Canvas canvasWorld;
     public RectTransform rectTransform;
     [SerializeField] private Image backgroundImage;
+    [SerializeField] private UnityEvent updateEvent;
     
     private Color backgroundColor;
     private bool isDragging;
@@ -114,16 +116,17 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             // Add listener
             // Update Button
             // Save note
-            updateButton.onClick.AddListener(() => updateFormManager.SaveUpdatedNote(this));
-            // Empty the input field
-            updateButton.onClick.AddListener(() => updateFormManager.inputTitle.text = "");
-            updateButton.onClick.AddListener(() => updateFormManager.inputBody.text = "");
-            // Deactivate update form manager
-            updateButton.onClick.AddListener(() => updateFormManager.gameObject.SetActive(false));
+            Debug.Log(this);
+            updateButton.onClick.RemoveAllListeners();
+            updateButton.onClick.AddListener(delegate
+            {
+                updateEvent?.Invoke();
+            });
             
             // Delete button
             deleteButton.onClick.AddListener(() => confirmDelete.SetActive(true));
             // Confirm delete
+            
             confirmDeleteButton.onClick.AddListener(() => updateFormManager.DeleteNote(this));
             confirmDeleteButton.onClick.AddListener(() => confirmDelete.SetActive(false));
             confirmDeleteButton.onClick.AddListener(() => updateFormManager.gameObject.SetActive(false));

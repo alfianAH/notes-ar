@@ -50,6 +50,11 @@ public class GameDataController : MonoBehaviour
         SaveGame();
     }
 
+    private void OnApplicationQuit()
+    {
+        SaveGame();
+    }
+
     /// <summary>
     /// Get notes length
     /// </summary>
@@ -141,11 +146,11 @@ public class GameDataController : MonoBehaviour
         };
         
         // Search notes
-        for (int i = 0; i <= SaveData.noteDatas.Count; i++)
+        foreach (NoteData note in SaveData.noteDatas)
         {
-            if(SaveData.noteDatas[i].id != notesHolder.name) continue;
+            if(note.id != notesHolder.name) continue;
             
-            SaveData.noteDatas.RemoveAt(i);
+            SaveData.noteDatas.RemoveAll(t => t.id == notesHolder.name);
             SaveData.noteDatas.Add(notesData);
             break;
         }
