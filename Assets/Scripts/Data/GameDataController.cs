@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -162,7 +161,7 @@ public class GameDataController : MonoBehaviour
         {
             SaveData.noteDatas = new List<NoteData>();
         }
-        // BUG: index in JSON is not as same as index in notes holder
-        SaveData.noteDatas.RemoveAt(notesHolder.NoteId);
+        // Remove note
+        SaveData.noteDatas.RemoveAll(t => t.id == notesHolder.name);
     }
 }

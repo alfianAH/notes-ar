@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -10,18 +8,17 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     [SerializeField] private Text titleText,
         bodyText;
     [SerializeField] private Button updateButton,
-        deleteButton;
+        deleteButton,
+        confirmDeleteButton;
     [SerializeField] private FormManager updateFormManager;
+    [SerializeField] private GameObject confirmDelete;
     [SerializeField] private Canvas canvasWorld;
     public RectTransform rectTransform;
     [SerializeField] private Image backgroundImage;
     
     private Color backgroundColor;
     private bool isDragging;
-    [SerializeField] private int noteId;
-
-    public int NoteId => noteId;
-
+    
     public Text TitleText => titleText;
 
     public Text BodyText => bodyText;
@@ -29,12 +26,6 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private void Awake()
     {
         GetNoteComponents();
-    }
-
-    private void Start()
-    {
-        // Set noteId by getting last number in game object's name
-        noteId = Int32.Parse(Regex.Match(name, @"\d+").Value);
     }
 
     /// <summary>
@@ -131,8 +122,11 @@ public class NotesHolder : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             updateButton.onClick.AddListener(() => updateFormManager.gameObject.SetActive(false));
             
             // Delete button
-            deleteButton.onClick.AddListener(() => updateFormManager.DeleteNote(this));
-            deleteButton.onClick.AddListener(() => updateFormManager.gameObject.SetActive(false));
+            deleteButton.onClick.AddListener(() => confirmDelete.SetActive(true));
+            // Confirm delete
+            confirmDeleteButton.onClick.AddListener(() => updateFormManager.DeleteNote(this));
+            confirmDeleteButton.onClick.AddListener(() => confirmDelete.SetActive(false));
+            confirmDeleteButton.onClick.AddListener(() => updateFormManager.gameObject.SetActive(false));
         }
     }
 }
